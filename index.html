@@ -11,160 +11,164 @@
 			import * as THREE from 'https://threejs.org/build/three.module.js';
 			import { STLLoader } from 'https://threejs.org/examples/jsm/loaders/STLLoader.js';
 
-			let container, camera, scene, renderer;
+			const main = () => {
+				let container, camera, scene, renderer;
 
-			let mouseX = 0;
-			let mouseY = 0;
-			let mobileX = 0;
-			let mobileY = 0;
-			let mobileZ = 0;
+				let mouseX = 0;
+				let mouseY = 0;
+				let mobileX = 0;
+				let mobileY = 0;
+				let mobileZ = 0;
 
-			let windowHalfX = window.innerWidth / 2;
-			let windowHalfY = window.innerHeight / 2;
+				let windowHalfX = window.innerWidth / 2;
+				let windowHalfY = window.innerHeight / 2;
 
-			document.addEventListener( 'mousemove', onDocumentMouseMove );
+				document.addEventListener( 'mousemove', onDocumentMouseMove );
 
-			if (!window.DeviceOrientationEvent) {
-				alert('Нет поддержки')
-			}
-			//document.addEventListener( 'deviceorientation', onMobileMove, false );
-			let acl = new Accelerometer({frequency: 60});
-			acl.addEventListener('reading', () => {
-				mobileX =  acl.x;
-				mobileY =  acl.y;
-				mobileZ =  acl.z;
-				//console.log("Acceleration along the Z-axis " + acl.z);
-			});
-
-			acl.start();
-
-
-			init();
-			animate();
-
-			function init() {
-				
-
-				container = document.createElement( 'div' );
-				document.body.appendChild( container );
-
-				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.01, 1000 );
-				camera.position.set( 150, 150, 500 );
-
-				// const path = "textures/cube/pisa/";
-				// const format = '.png';
-				// const urls = [
-				// 	path + 'px' + format, path + 'nx' + format,
-				// 	path + 'py' + format, path + 'ny' + format,
-				// 	path + 'pz' + format, path + 'nz' + format
-				// ];
-				//const textureCube = new THREE.CubeTextureLoader().load( urls );
-
-				const textureCube = new THREE.CubeTextureLoader()
-					.setPath( 'Park3Med/' )
-					.load( [ 'px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg' ] );
-				textureCube.mapping = THREE.CubeRefractionMapping;
-
-
-
-				scene = new THREE.Scene();
-				scene.background = textureCube;
-
-				let loader = new STLLoader();
-				let geometry = new THREE.BufferGeometry()
-
-				loader.load("peter1.stl", function (geom) {
-					geometry.copy(geom)
-					geometry.center()
-					geometry.rotateX(-Math.PI / 2)
-					//console.log(geometry)
+				if (!window.DeviceOrientationEvent) {
+					alert('Нет поддержки')
+				}
+				//document.addEventListener( 'deviceorientation', onMobileMove, false );
+				let acl = new Accelerometer({frequency: 60});
+				acl.addEventListener('reading', () => {
+					mobileX =  acl.x;
+					mobileY =  acl.y;
+					mobileZ =  acl.z;
+					//console.log("Acceleration along the Z-axis " + acl.z);
 				});
 
-				const material = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube } );
+				acl.start();
 
-				const mesh = new THREE.Mesh( geometry, material );
 
-				scene.add( mesh );
-				mesh.position.z -= 400
+				init();
+				animate();
 
-				renderer = new THREE.WebGLRenderer();
-				renderer.setPixelRatio( window.devicePixelRatio );
-				container.appendChild( renderer.domElement );
+				function init() {
+					
 
-				const width = window.innerWidth || 2;
-				const height = window.innerHeight || 2;
+					container = document.createElement( 'div' );
+					document.body.appendChild( container );
 
-				renderer.setSize( width, height );
+					camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.01, 1000 );
+					camera.position.set( 150, 150, 500 );
 
-				window.addEventListener( 'resize', onWindowResize );
+					// const path = "textures/cube/pisa/";
+					// const format = '.png';
+					// const urls = [
+					// 	path + 'px' + format, path + 'nx' + format,
+					// 	path + 'py' + format, path + 'ny' + format,
+					// 	path + 'pz' + format, path + 'nz' + format
+					// ];
+					//const textureCube = new THREE.CubeTextureLoader().load( urls );
 
-			}
+					const textureCube = new THREE.CubeTextureLoader()
+						.setPath( 'Park3Med/' )
+						.load( [ 'px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg' ] );
+					textureCube.mapping = THREE.CubeRefractionMapping;
 
-			function onWindowResize() {
 
-				windowHalfX = window.innerWidth / 2;
-				windowHalfY = window.innerHeight / 2;
 
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
+					scene = new THREE.Scene();
+					scene.background = textureCube;
 
-				renderer.setSize( window.innerWidth, window.innerHeight );
+					let loader = new STLLoader();
+					let geometry = new THREE.BufferGeometry()
 
-			}
+					loader.load("peter1.stl", function (geom) {
+						geometry.copy(geom)
+						geometry.center()
+						geometry.rotateX(-Math.PI / 2)
+						//console.log(geometry)
+					});
 
-			// function onMobileMove( event ) {
+					const material = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube } );
 
-			// 	console.log(event)
-			// 	mobileX = event.beta
-			// 	mobileY = event.gamma
+					const mesh = new THREE.Mesh( geometry, material );
 
-			// }
+					scene.add( mesh );
+					mesh.position.z -= 400
 
-			function onDocumentMouseMove( event ) {
+					renderer = new THREE.WebGLRenderer();
+					renderer.setPixelRatio( window.devicePixelRatio );
+					container.appendChild( renderer.domElement );
 
-				// mouseX = ( event.clientX - windowHalfX ) / 2;
-				// mouseY = ( event.clientY - windowHalfY ) / 0.9;
-				//console.log(event)
+					const width = window.innerWidth || 2;
+					const height = window.innerHeight || 2;
 
-				mouseX = ( event.clientX - windowHalfX ) / 1000;
-				mouseY = ( event.clientY - windowHalfY ) / 1000;
+					renderer.setSize( width, height );
 
-			}
+					window.addEventListener( 'resize', onWindowResize );
 
-			function animate() {
-
-				requestAnimationFrame( animate );
-				render();
-
-			}
-
-			function render() {
-
-				if (navigator.userAgent.match(/Android/i)
-					|| navigator.userAgent.match(/webOS/i)
-					|| navigator.userAgent.match(/iPhone/i)
-					|| navigator.userAgent.match(/iPad/i)
-					|| navigator.userAgent.match(/iPod/i)
-					|| navigator.userAgent.match(/BlackBerry/i)
-					|| navigator.userAgent.match(/Windows Phone/i)
-				) {
-					//camera.rotation.x += ( mobileY - camera.rotation.x ) * .0015;
-					camera.rotation.y += ( - mobileX - camera.rotation.y ) * .0031;
-					//camera.rotation.z += ( mobileZ - camera.rotation.z ) * .0015;
-				}
-				else {
-					camera.rotation.x += ( - mouseY - camera.rotation.x ) * .05;
-					camera.rotation.y += ( - mouseX - camera.rotation.y ) * .05;
 				}
 
-				// camera.rotation.x += ( - mouseY - camera.rotation.x ) * .05;
-				// camera.rotation.y += ( - mouseX - camera.rotation.y ) * .05;
+				function onWindowResize() {
 
-				//camera.lookAt( scene.position );
+					windowHalfX = window.innerWidth / 2;
+					windowHalfY = window.innerHeight / 2;
+
+					camera.aspect = window.innerWidth / window.innerHeight;
+					camera.updateProjectionMatrix();
+
+					renderer.setSize( window.innerWidth, window.innerHeight );
+
+				}
+
+				// function onMobileMove( event ) {
+
+				// 	console.log(event)
+				// 	mobileX = event.beta
+				// 	mobileY = event.gamma
+
+				// }
+
+				function onDocumentMouseMove( event ) {
+
+					// mouseX = ( event.clientX - windowHalfX ) / 2;
+					// mouseY = ( event.clientY - windowHalfY ) / 0.9;
+					//console.log(event)
+
+					mouseX = ( event.clientX - windowHalfX ) / 1000;
+					mouseY = ( event.clientY - windowHalfY ) / 1000;
+
+				}
+
+				function animate() {
+
+					requestAnimationFrame( animate );
+					render();
+
+				}
+
+				function render() {
+
+					if (navigator.userAgent.match(/Android/i)
+						|| navigator.userAgent.match(/webOS/i)
+						|| navigator.userAgent.match(/iPhone/i)
+						|| navigator.userAgent.match(/iPad/i)
+						|| navigator.userAgent.match(/iPod/i)
+						|| navigator.userAgent.match(/BlackBerry/i)
+						|| navigator.userAgent.match(/Windows Phone/i)
+					) {
+						//camera.rotation.x += ( mobileY - camera.rotation.x ) * .0015;
+						camera.rotation.y += ( - mobileX - camera.rotation.y ) * .0031;
+						//camera.rotation.z += ( mobileZ - camera.rotation.z ) * .0015;
+					}
+					else {
+						camera.rotation.x += ( - mouseY - camera.rotation.x ) * .05;
+						camera.rotation.y += ( - mouseX - camera.rotation.y ) * .05;
+					}
+
+					// camera.rotation.x += ( - mouseY - camera.rotation.x ) * .05;
+					// camera.rotation.y += ( - mouseX - camera.rotation.y ) * .05;
+
+					//camera.lookAt( scene.position );
 
 
-				renderer.render( scene, camera );
-
+					renderer.render( scene, camera );
+				}
+				Promise.all([navigator.permissions.query({ name: "accelerometer" }),
+							navigator.permissions.query({ name: "gyroscope" })])
+					.then(() => main())
 			}
 
 		</script>
