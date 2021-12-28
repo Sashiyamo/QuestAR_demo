@@ -149,7 +149,7 @@
 					|| navigator.userAgent.match(/Windows Phone/i)
 				) {
 					//camera.rotation.x += ( mobileY - camera.rotation.x ) * .0015;
-					camera.rotation.y += ( mobileX - camera.rotation.y ) * .0015;
+					camera.rotation.y += ( - mobileX - camera.rotation.y ) * .0031;
 					//camera.rotation.z += ( mobileZ - camera.rotation.z ) * .0015;
 				}
 				else {
