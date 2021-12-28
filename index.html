@@ -168,8 +168,7 @@
 				}
 			}
 
-			Promise.all([navigator.permissions.query({ name: "accelerometer" }),
-						navigator.permissions.query({ name: "gyroscope" })])
+			DeviceMotionEvent.requestPermission()
 				.then(() => main())
 				// main()
 
