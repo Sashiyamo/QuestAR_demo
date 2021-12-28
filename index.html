@@ -141,8 +141,8 @@
 					|| navigator.userAgent.match(/BlackBerry/i)
 					|| navigator.userAgent.match(/Windows Phone/i)
 				) {
-					camera.rotation.x += ( - mobileY - camera.rotation.x ) * .05;
-					camera.rotation.y += ( - mobileX- camera.rotation.y ) * .05;
+					camera.rotation.x += ( - mobileY - camera.rotation.x ) * .0005;
+					camera.rotation.y += ( mobileX - camera.rotation.y ) * .0005;
 				}
 				else {
 					camera.rotation.x += ( - mouseY - camera.rotation.x ) * .05;
