@@ -38,11 +38,14 @@
 
 			acl.start();
 
+			window.navigator.vibrate([2000, 1000, 2000]);
+
 
 			init();
 			animate();
 
 			function init() {
+				
 
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
