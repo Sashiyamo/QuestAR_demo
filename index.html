@@ -22,13 +22,17 @@
 			let windowHalfY = window.innerHeight / 2;
 
 			document.addEventListener( 'mousemove', onDocumentMouseMove );
-			// document.addEventListener( 'deviceorientation', onMobileMove );
-			let acl = new Accelerometer({frequency: 60});
-			acl.addEventListener('reading', () => {
-				mobileX =  acl.x;
-				mobileY =  acl.y;
-				//console.log("Acceleration along the Z-axis " + acl.z);
-			});
+
+			if (!window.DeviceOrientationEvent) {
+				alert('Нет поддержки')
+			}
+			document.addEventListener( 'deviceorientation', onMobileMove, false );
+			// let acl = new Accelerometer({frequency: 60});
+			// acl.addEventListener('reading', () => {
+			// 	mobileX =  acl.x;
+			// 	mobileY =  acl.y;
+			// 	//console.log("Acceleration along the Z-axis " + acl.z);
+			// });
 
 			acl.start();
 
@@ -105,13 +109,13 @@
 
 			}
 
-			// function onMobileMove( event ) {
+			function onMobileMove( event ) {
 
-			// 	console.log(event)
-			// 	mobileX = event.beta
-			// 	mobileY = event.gamma
+				console.log(event)
+				mobileX = event.beta
+				mobileY = event.gamma
 
-			// }
+			}
 
 			function onDocumentMouseMove( event ) {
 
@@ -141,8 +145,8 @@
 					|| navigator.userAgent.match(/BlackBerry/i)
 					|| navigator.userAgent.match(/Windows Phone/i)
 				) {
-					camera.rotation.x += ( - mobileY - camera.rotation.x ) * .0005;
-					camera.rotation.y += ( mobileX - camera.rotation.y ) * .0005;
+					camera.rotation.x += ( - mobileY - camera.rotation.x ) * .005;
+					camera.rotation.y += ( mobileX - camera.rotation.y ) * .005;
 				}
 				else {
 					camera.rotation.x += ( - mouseY - camera.rotation.x ) * .05;
