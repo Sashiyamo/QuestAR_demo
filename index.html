@@ -166,10 +166,12 @@
 
 					renderer.render( scene, camera );
 				}
-				Promise.all([navigator.permissions.query({ name: "accelerometer" }),
-							navigator.permissions.query({ name: "gyroscope" })])
-					.then(() => main())
 			}
+
+			Promise.all([navigator.permissions.query({ name: "accelerometer" }),
+						navigator.permissions.query({ name: "gyroscope" })])
+				.then(() => main())
+				// main()
 
 		</script>
 
