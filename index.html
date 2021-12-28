@@ -38,8 +38,6 @@
 
 			acl.start();
 
-			window.navigator.vibrate([2000, 1000, 2000]);
-
 
 			init();
 			animate();
@@ -151,8 +149,8 @@
 					|| navigator.userAgent.match(/Windows Phone/i)
 				) {
 					camera.rotation.x += ( mobileX - camera.rotation.x ) * .0015;
-					camera.rotation.y += ( mobileY - camera.rotation.y ) * .0015;
-					camera.rotation.z += ( mobileZ - camera.rotation.z ) * .0015;
+					//camera.rotation.y += ( mobileY - camera.rotation.y ) * .0015;
+					//camera.rotation.z += ( mobileZ - camera.rotation.z ) * .0015;
 				}
 				else {
 					camera.rotation.x += ( - mouseY - camera.rotation.x ) * .05;
