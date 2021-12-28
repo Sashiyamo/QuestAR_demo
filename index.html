@@ -44,8 +44,6 @@
 
 			function init() {
 
-				window.navigator.vibrate([200, 100, 200]);
-
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
 
@@ -149,8 +147,8 @@
 					|| navigator.userAgent.match(/BlackBerry/i)
 					|| navigator.userAgent.match(/Windows Phone/i)
 				) {
-					camera.rotation.x += ( - mobileY - camera.rotation.x ) * .0015;
-					camera.rotation.y += ( mobileX - camera.rotation.y ) * .0015;
+					camera.rotation.x += ( mobileX - camera.rotation.x ) * .0015;
+					camera.rotation.y += ( mobileY - camera.rotation.y ) * .0015;
 					camera.rotation.z += ( mobileZ - camera.rotation.z ) * .0015;
 				}
 				else {
